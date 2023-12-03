@@ -9,3 +9,8 @@
 2. `npm run deploy`
 
 This will deploy the next application to AWS using SST.
+
+## Blacksmith Email
+
+email: xiloceg612@bustayes.com
+password: thisIsaTestPassword!

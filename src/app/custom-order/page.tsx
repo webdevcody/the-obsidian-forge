@@ -13,9 +13,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ReactNode, useState } from "react";
 import { cn } from "@/lib/utils";
+import { api } from "../../../convex/_generated/api";
+import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
 
 export default function CustomOrderPage() {
-  const [selectedItemType, setSelectedItemType] = useState("");
+  const createOrderMutation = useMutation(api.orders.createOrder);
+  const [selectedItemType, setItemType] = useState("");
   const [materialType, setMaterialType] = useState("");
   const [upgrades, setUpgrades] = useState({
     sharpEdges: false,
@@ -23,6 +27,7 @@ export default function CustomOrderPage() {
     reinforced: false,
     magicResistant: false,
   });
+  const router = useRouter();
 
   function ItemTypeCard({
     itemType,
@@ -39,11 +44,8 @@ export default function CustomOrderPage() {
       >
         <div className="flex flex-col items-center">
           {icon}
-          <h2 className="text-xl font-bold mb-1">Sword</h2>
-          <Button
-            onClick={() => setSelectedItemType(itemType)}
-            variant="outline"
-          >
+          <h2 className="text-xl font-bold mb-1">{itemType}</h2>
+          <Button onClick={() => setItemType(itemType)} variant="outline">
             Select
           </Button>
         </div>
@@ -81,6 +83,7 @@ export default function CustomOrderPage() {
           onValueChange={(value) => {
             setMaterialType(value);
           }}
+          value={materialType}
         >
           <SelectTrigger className="text-black w-full">
             <SelectValue placeholder="Select a material" />
@@ -98,6 +101,7 @@ export default function CustomOrderPage() {
           <Label className="flex items-center gap-2 font-normal">
             <Checkbox
               id="sharpEdge"
+              checked={upgrades.sharpEdges === true}
               onCheckedChange={(isChecked) =>
                 setUpgrades({
                   ...upgrades,
@@ -109,6 +113,7 @@ export default function CustomOrderPage() {
           </Label>
           <Label className="flex items-center gap-2 font-normal">
             <Checkbox
+              checked={upgrades.reinforced === true}
               onCheckedChange={(isChecked) =>
                 setUpgrades({
                   ...upgrades,
@@ -121,6 +126,7 @@ export default function CustomOrderPage() {
           </Label>
           <Label className="flex items-center gap-2 font-normal">
             <Checkbox
+              checked={upgrades.lightweight === true}
               onCheckedChange={(isChecked) =>
                 setUpgrades({
                   ...upgrades,
@@ -133,6 +139,7 @@ export default function CustomOrderPage() {
           </Label>
           <Label className="flex items-center gap-2 font-normal">
             <Checkbox
+              checked={upgrades.magicResistant === true}
               onCheckedChange={(isChecked) =>
                 setUpgrades({
                   ...upgrades,
@@ -146,7 +153,21 @@ export default function CustomOrderPage() {
         </div>
       </div>
       <div className="mt-12 text-center">
-        <Button className="px-10 py-2">Create</Button>
+        <Button
+          onClick={() =>
+            createOrderMutation({
+              itemType: selectedItemType,
+              materialType,
+              upgrades,
+            }).then((response) => {
+              router.push("/success");
+            })
+          }
+          variant="outline"
+          className="px-10 py-2 text-black"
+        >
+          Submit Order
+        </Button>
       </div>
     </section>
   );
@@ -162,8 +183,8 @@ function IconShield(props: any) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
       stroke-linejoin="round"
     >
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
@@ -181,8 +202,8 @@ function IconSword(props: any) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
       stroke-linejoin="round"
     >
       <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
@@ -203,8 +224,8 @@ function IconAxe(props: any) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
       stroke-linejoin="round"
     >
       <path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9" />
@@ -223,8 +244,8 @@ function IconBow(props: any) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
       stroke-linejoin="round"
     >
       <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
