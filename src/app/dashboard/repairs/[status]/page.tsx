@@ -14,7 +14,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { redirect } from "next/navigation";
 import { DateTime } from "luxon";
-import { ViewOrderDialog } from "./_components/view-order-dialog";
+import { ViewRepairDialog } from "./_components/view-repair-dialog";
 import { useSession } from "@clerk/clerk-react";
 import { useEffect } from "react";
 
@@ -31,7 +31,7 @@ export default function DashboardPage({
       params.status
     )
   ) {
-    return redirect("/dashboard/orders/new");
+    return redirect("/dashboard/repairs/new");
   }
 
   const session = useSession();
@@ -44,8 +44,8 @@ export default function DashboardPage({
 
   const status = params.status as OrderTypes;
 
-  const setStatusMutation = useMutation(api.orders.setOrderStatus);
-  const orders = useQuery(api.orders.getOrders, {
+  const setStatusMutation = useMutation(api.repairs.setRepairStatus);
+  const repairs = useQuery(api.repairs.getRepairs, {
     status,
   });
 
@@ -65,13 +65,13 @@ export default function DashboardPage({
       </CardHeader>
       <CardContent>
         <div className="text-sm leading-snug text-gray-500 dark:text-gray-400">
-          {!orders || orders.length === 0 ? (
-            <div>No Orders</div>
+          {!repairs || repairs.length === 0 ? (
+            <div>No Repairs</div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Order ID</TableHead>
+                  <TableHead>Repair ID</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Date</TableHead>
@@ -79,16 +79,16 @@ export default function DashboardPage({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {orders?.map((order) => {
+                {repairs?.map((repair) => {
                   return (
-                    <TableRow key={order._id}>
+                    <TableRow key={repair._id}>
                       <TableCell>
-                        <ViewOrderDialog order={order} />
+                        <ViewRepairDialog repair={repair} />
                       </TableCell>
-                      <TableCell>{order.user.name}</TableCell>
-                      <TableCell>{order.user.email}</TableCell>
+                      <TableCell>{repair.user.name}</TableCell>
+                      <TableCell>{repair.user.email}</TableCell>
                       <TableCell>
-                        {DateTime.fromMillis(order._creationTime).toFormat(
+                        {DateTime.fromMillis(repair._creationTime).toFormat(
                           "LLL dd, yyyy hh:MM a"
                         )}
                       </TableCell>
@@ -97,7 +97,7 @@ export default function DashboardPage({
                           <Button
                             onClick={() => {
                               setStatusMutation({
-                                orderId: order._id,
+                                repairId: repair._id,
                                 status: "inProgress",
                               });
                             }}
@@ -109,7 +109,7 @@ export default function DashboardPage({
                           <Button
                             onClick={() => {
                               setStatusMutation({
-                                orderId: order._id,
+                                repairId: repair._id,
                                 status: "readyForPickup",
                               });
                             }}
@@ -121,7 +121,7 @@ export default function DashboardPage({
                           <Button
                             onClick={() => {
                               setStatusMutation({
-                                orderId: order._id,
+                                repairId: repair._id,
                                 status: "completed",
                               });
                             }}

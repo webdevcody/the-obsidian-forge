@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default function SubmitOrderPage() {
   return (
@@ -24,35 +25,13 @@ export default function SubmitOrderPage() {
               width="500"
               height="500"
             />
-            <p className="text-gray-900 dark:text-gray-100">
-              Create a custom order for a unique handcrafted item.
+            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
+              Request a new handcrafted item.
             </p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button asChild className="w-full">
               <Link href="/custom-order">Create Custom Order</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle>Purchase Existing Items</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Image
-              src="/buy.jpeg"
-              alt="a blacksmith shop to buy items"
-              width="500"
-              height="500"
-            />
-            <p className="text-gray-900 dark:text-gray-100">
-              Browse our collection of pre-made items.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button disabled asChild className="w-full">
-              <Link href="/browse">Browse Items</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -68,13 +47,39 @@ export default function SubmitOrderPage() {
               width="500"
               height="500"
             />
-            <p className="text-gray-900 dark:text-gray-100">
-              Request a repair service for your damaged items.
+            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
+              Request a repair service
             </p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button disabled asChild className="w-full">
-              <Link href="/service">Request Service</Link>
+              <Link href="/submit-repair">Request Repair</Link>
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle>Purchase Existing Items</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Image
+              src="/buy.jpeg"
+              alt="a blacksmith shop to buy items"
+              width="500"
+              height="500"
+            />
+            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
+              Browse our collection of pre-made items.
+            </p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button
+              disabled
+              asChild
+              className="w-full pointer-events-none bg-gray-400"
+            >
+              <Link href="/browse">Browse Items (Coming Soon)</Link>
             </Button>
           </CardFooter>
         </Card>

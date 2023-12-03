@@ -13,9 +13,45 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="hidden border-r bg-gray-900 lg:block">
         <div className="flex h-full max-h-screen flex-col gap-8">
           <div className="flex-1 overflow-auto py-8">
+            <div className="text-xl ml-4 mb-2">Repairs</div>
             <nav className="grid gap-2 items-start px-4 text-md font-medium">
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-gray-200"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
+                href="/dashboard/repairs/new"
+              >
+                <StarIcon />
+                New Repairs
+              </Link>
+
+              <Link
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
+                href="/dashboard/repairs/inProgress"
+              >
+                <HammerIcon />
+                In Progress
+              </Link>
+
+              <Link
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
+                href="/dashboard/repairs/readyForPickup"
+              >
+                <PackageIcon />
+                Ready for Pickup
+              </Link>
+
+              <Link
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
+                href="/dashboard/repairs/completed"
+              >
+                <CheckIcon />
+                Completed
+              </Link>
+            </nav>
+
+            <div className="text-xl ml-4 mb-2 mt-8">Orders</div>
+            <nav className="grid gap-2 items-start px-4 text-md font-medium">
+              <Link
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
                 href="/dashboard/orders/new"
               >
                 <StarIcon />
@@ -23,7 +59,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </Link>
 
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-gray-200"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
                 href="/dashboard/orders/inProgress"
               >
                 <HammerIcon />
@@ -31,7 +67,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </Link>
 
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-gray-200"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
                 href="/dashboard/orders/readyForPickup"
               >
                 <PackageIcon />
@@ -39,7 +75,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </Link>
 
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-gray-200"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
                 href="/dashboard/orders/completed"
               >
                 <CheckIcon />

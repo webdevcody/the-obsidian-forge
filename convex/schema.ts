@@ -21,4 +21,17 @@ export default defineSchema({
       v.literal("completed")
     ),
   }).index("index_status", ["status"]),
+  repairs: defineTable({
+    userId: v.string(),
+    repairId: v.string(),
+    user: v.any(),
+    description: v.string(),
+    imageId: v.string(),
+    status: v.union(
+      v.literal("new"),
+      v.literal("inProgress"),
+      v.literal("readyForPickup"),
+      v.literal("completed")
+    ),
+  }).index("index_status", ["status"]),
 });

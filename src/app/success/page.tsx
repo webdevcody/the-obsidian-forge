@@ -14,10 +14,8 @@ export default function SuccessPage() {
         Your order has been created and you will receive an email confirmation
         shortly.
       </p>
-      <Button className="mt-8" variant="outline">
-        <Link className="text-black flex items-center justify-center" href="/">
-          Go Home
-        </Link>
+      <Button asChild className="mt-8" variant="outline">
+        <Link href="/">Go Home</Link>
       </Button>
     </div>
   );

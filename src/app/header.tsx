@@ -9,10 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const session = useConvexAuth();
   const isAdmin = !!useSession().session?.user.publicMetadata.isAdmin;
+  const router = useRouter();
 
   return (
     <>
@@ -57,7 +59,13 @@ export const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  <SignOutButton>Sign Out</SignOutButton>
+                  <SignOutButton
+                    signOutCallback={() => {
+                      router.push("/");
+                    }}
+                  >
+                    Sign Out
+                  </SignOutButton>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -14,7 +14,6 @@ export const setOrderStatus = mutation({
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
-    console.log("user", user);
     if (!user) {
       return {
         error: "invalid user",
@@ -76,14 +75,5 @@ export const getOrders = query({
       .query("order")
       .withIndex("index_status", (q) => q.eq("status", args.status))
       .collect();
-  },
-});
-
-export const getOrder = query({
-  args: {
-    orderId: v.id("order"),
-  },
-  handler: async (ctx, args) => {
-    return ctx.db.get(args.orderId);
   },
 });

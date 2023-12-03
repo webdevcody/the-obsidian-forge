@@ -12,5 +12,7 @@ This will deploy the next application to AWS using SST.
 
 ## Blacksmith Email
 
+To test out the admin dashboard, login as:
+
 email: xiloceg612@bustayes.com
 password: thisIsaTestPassword!
