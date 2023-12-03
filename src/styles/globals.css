@@ -74,3 +74,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+.glow {
+  background: linear-gradient(-45deg, #ee52e1, #943ce7, #d523a2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

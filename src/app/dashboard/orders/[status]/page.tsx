@@ -17,9 +17,11 @@ import { DateTime } from "luxon";
 import { ViewOrderDialog } from "./_components/view-order-dialog";
 import { useSession } from "@clerk/clerk-react";
 import { useEffect } from "react";
+import { Doc } from "../../../../../convex/_generated/dataModel";
+import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 
-const orders = ["new", "inProgress", "readyForPickup", "completed"] as const;
-type OrderTypes = (typeof orders)[number];
+type OrderStates = ["new", "inProgress", "readyForPickup", "completed"][number];
 
 export default function DashboardPage({
   params,
@@ -37,19 +39,25 @@ export default function DashboardPage({
   const session = useSession();
 
   useEffect(() => {
-    if (session.isLoaded && (session.session?.publicUserData as any).isAdmin) {
+    if (!session.isLoaded) return;
+    if (
+      !session.session ||
+      !(session.session.user.publicMetadata as any).isAdmin
+    ) {
       return redirect("/");
     }
   }, [session]);
 
-  const status = params.status as OrderTypes;
+  const status = params.status as OrderStates;
+
+  const { toast } = useToast();
 
   const setStatusMutation = useMutation(api.orders.setOrderStatus);
   const orders = useQuery(api.orders.getOrders, {
     status,
   });
 
-  const titlesByStatus: Record<OrderTypes, string> = {
+  const titlesByStatus: Record<OrderStates, string> = {
     new: "New",
     completed: "Completed",
     inProgress: "In Progress",
@@ -57,6 +65,17 @@ export default function DashboardPage({
   };
 
   const title = titlesByStatus[status];
+
+  function updateState(repair: Doc<"order">, newState: OrderStates) {
+    setStatusMutation({
+      orderId: repair._id,
+      status: newState,
+    });
+    toast({
+      title: "Scheduled: Catch up",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+    });
+  }
 
   return (
     <Card>
@@ -72,6 +91,7 @@ export default function DashboardPage({
               <TableHeader>
                 <TableRow>
                   <TableHead>Order ID</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Date</TableHead>
@@ -85,6 +105,15 @@ export default function DashboardPage({
                       <TableCell>
                         <ViewOrderDialog order={order} />
                       </TableCell>
+                      <TableCell>
+                        <Image
+                          className="rounded-xl self-center"
+                          src={`/items/${order.itemType}.jpeg`}
+                          width="40"
+                          height="40"
+                          alt={order.itemType}
+                        />
+                      </TableCell>
                       <TableCell>{order.user.name}</TableCell>
                       <TableCell>{order.user.email}</TableCell>
                       <TableCell>
@@ -95,36 +124,21 @@ export default function DashboardPage({
                       <TableCell>
                         {status === "new" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                orderId: order._id,
-                                status: "inProgress",
-                              });
-                            }}
+                            onClick={() => updateState(order, "inProgress")}
                           >
                             Move to In Progress
                           </Button>
                         )}
                         {status === "inProgress" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                orderId: order._id,
-                                status: "readyForPickup",
-                              });
-                            }}
+                            onClick={() => updateState(order, "readyForPickup")}
                           >
                             Set Ready for Pickup
                           </Button>
                         )}
                         {status === "readyForPickup" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                orderId: order._id,
-                                status: "completed",
-                              });
-                            }}
+                            onClick={() => updateState(order, "completed")}
                           >
                             Mark as Completed
                           </Button>

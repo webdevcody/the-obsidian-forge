@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Doc } from "../../../../../../convex/_generated/dataModel";
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 export function ViewOrderDialog({ order }: { order: Doc<"order"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,40 +32,36 @@ export function ViewOrderDialog({ order }: { order: Doc<"order"> }) {
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-2">
-            <div className="border p-4 rounded">
+            <div className="border p-4 gap-1 rounded flex flex-col justify-center text-center">
               <h3 className="text-xl">Item Type</h3>
-              <span className="text-lg text-white">{order.itemType}</span>
+              <div className="text-lg text-purple-300">{order.itemType}</div>
+              <Image
+                className="rounded-xl self-center"
+                src={`/items/${order.itemType}.jpeg`}
+                width="100"
+                height="100"
+                alt={order.itemType}
+              />
             </div>
 
-            <div className="border p-4 rounded">
+            <div className="border p-4 rounded text-center">
               <h3 className="text-xl">Material Type</h3>
-              <span className="text-lg text-white">{order.materialType}</span>
+              <span className="text-lg text-purple-300">
+                {order.materialType}
+              </span>
             </div>
           </div>
 
-          <h3>Upgrades</h3>
-          <div className="border p-4 rounded">
-            <ul className="list-disc flex flex-col gap-2">
-              {order.upgrades.lightweight && (
-                <li className="flex gap-2 items-center">
-                  <CheckCircle className="text-green-400" /> Light Weight
-                </li>
-              )}
-              {order.upgrades.magicResistant && (
-                <li className="flex gap-2 items-center">
-                  <CheckCircle className="text-green-400" /> Magic Resistant
-                </li>
-              )}
-              {order.upgrades.reinforced && (
-                <li className="flex gap-2 items-center">
-                  <CheckCircle className="text-green-400" /> Reinforced
-                </li>
-              )}
-              {order.upgrades.sharpEdges && (
-                <li className="flex gap-2 items-center">
-                  <CheckCircle className="text-green-400" /> Extra Sharp Edges
-                </li>
-              )}
+          <div className="border p-4 rounded text-center">
+            <h3 className="mb-4">Upgrades</h3>
+            <ul className="list-disc grid grid-cols-2 gap-4 text-md">
+              {Object.entries(order.upgrades)
+                .filter((entry) => entry[1] === true)
+                .map((entry) => (
+                  <li className="flex gap-4 items-center">
+                    <CheckCircle className="text-green-400" /> {entry[0]}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

@@ -70,3 +70,19 @@ export const getRepairs = query({
       .collect();
   },
 });
+
+export const getRepairCounts = query({
+  handler: async (ctx) => {
+    const repairs = await ctx.db.query("repairs").collect();
+    return {
+      new: repairs.filter((repair) => repair.status === "new").length,
+      inProgress: repairs.filter((repair) => repair.status === "inProgress")
+        .length,
+      readyForPickup: repairs.filter(
+        (repair) => repair.status === "readyForPickup"
+      ).length,
+      completed: repairs.filter((repair) => repair.status === "completed")
+        .length,
+    };
+  },
+});

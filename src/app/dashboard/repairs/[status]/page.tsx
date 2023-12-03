@@ -17,9 +17,11 @@ import { DateTime } from "luxon";
 import { ViewRepairDialog } from "./_components/view-repair-dialog";
 import { useSession } from "@clerk/clerk-react";
 import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { Doc } from "../../../../../convex/_generated/dataModel";
 
-const orders = ["new", "inProgress", "readyForPickup", "completed"] as const;
-type OrderTypes = (typeof orders)[number];
+const states = ["new", "inProgress", "readyForPickup", "completed"] as const;
+type RepairStates = (typeof states)[number];
 
 export default function DashboardPage({
   params,
@@ -37,19 +39,24 @@ export default function DashboardPage({
   const session = useSession();
 
   useEffect(() => {
-    if (session.isLoaded && (session.session?.publicUserData as any).isAdmin) {
+    if (!session.isLoaded) return;
+    if (
+      !session.session ||
+      !(session.session.user.publicMetadata as any).isAdmin
+    ) {
       return redirect("/");
     }
   }, [session]);
 
-  const status = params.status as OrderTypes;
+  const status = params.status as RepairStates;
 
   const setStatusMutation = useMutation(api.repairs.setRepairStatus);
   const repairs = useQuery(api.repairs.getRepairs, {
     status,
   });
+  const { toast } = useToast();
 
-  const titlesByStatus: Record<OrderTypes, string> = {
+  const titlesByStatus: Record<RepairStates, string> = {
     new: "New",
     completed: "Completed",
     inProgress: "In Progress",
@@ -57,6 +64,17 @@ export default function DashboardPage({
   };
 
   const title = titlesByStatus[status];
+
+  function updateState(repair: Doc<"repairs">, newState: RepairStates) {
+    setStatusMutation({
+      repairId: repair._id,
+      status: newState,
+    });
+    toast({
+      title: "Scheduled: Catch up",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+    });
+  }
 
   return (
     <Card>
@@ -95,36 +113,23 @@ export default function DashboardPage({
                       <TableCell>
                         {status === "new" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                repairId: repair._id,
-                                status: "inProgress",
-                              });
-                            }}
+                            onClick={() => updateState(repair, "inProgress")}
                           >
                             Move to In Progress
                           </Button>
                         )}
                         {status === "inProgress" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                repairId: repair._id,
-                                status: "readyForPickup",
-                              });
-                            }}
+                            onClick={() =>
+                              updateState(repair, "readyForPickup")
+                            }
                           >
                             Set Ready for Pickup
                           </Button>
                         )}
                         {status === "readyForPickup" && (
                           <Button
-                            onClick={() => {
-                              setStatusMutation({
-                                repairId: repair._id,
-                                status: "completed",
-                              });
-                            }}
+                            onClick={() => updateState(repair, "completed")}
                           >
                             Mark as Completed
                           </Button>

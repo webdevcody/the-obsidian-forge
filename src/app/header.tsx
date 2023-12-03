@@ -10,10 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 export const Header = () => {
-  const session = useConvexAuth();
-  const isAdmin = !!useSession().session?.user.publicMetadata.isAdmin;
+  const { session } = useSession();
+  const isAdmin = session?.user.publicMetadata.isAdmin;
   const router = useRouter();
 
   return (
@@ -50,11 +51,14 @@ export const Header = () => {
         </div>
 
         <div className="hidden md:block">
-          {session.isAuthenticated ? (
+          {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={session.user.imageUrl} />
+                  <AvatarFallback className="bg-purple-300 text-black">
+                    CN
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>

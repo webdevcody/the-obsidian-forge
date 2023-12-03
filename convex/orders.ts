@@ -32,12 +32,7 @@ export const createOrder = mutation({
   args: {
     materialType: v.string(),
     itemType: v.string(),
-    upgrades: v.object({
-      sharpEdges: v.boolean(),
-      lightweight: v.boolean(),
-      reinforced: v.boolean(),
-      magicResistant: v.boolean(),
-    }),
+    upgrades: v.any(),
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
@@ -75,5 +70,21 @@ export const getOrders = query({
       .query("order")
       .withIndex("index_status", (q) => q.eq("status", args.status))
       .collect();
+  },
+});
+
+export const getOrderCounts = query({
+  handler: async (ctx) => {
+    const orders = await ctx.db.query("order").collect();
+    return {
+      new: orders.filter((repair) => repair.status === "new").length,
+      inProgress: orders.filter((repair) => repair.status === "inProgress")
+        .length,
+      readyForPickup: orders.filter(
+        (repair) => repair.status === "readyForPickup"
+      ).length,
+      completed: orders.filter((repair) => repair.status === "completed")
+        .length,
+    };
   },
 });

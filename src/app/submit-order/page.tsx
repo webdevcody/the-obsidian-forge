@@ -8,13 +8,12 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 export default function SubmitOrderPage() {
   return (
-    <main className="flex-1 p-6">
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card>
+    <main className="flex-1 py-24">
+      <div className="max-w-screen-lg mx-auto grid gap-8 md:grid-cols-3">
+        <Card className="bg-gray-800">
           <CardHeader className="text-center">
             <CardTitle>Custom Orders</CardTitle>
           </CardHeader>
@@ -24,10 +23,8 @@ export default function SubmitOrderPage() {
               alt="image of scroll and ink pen"
               width="500"
               height="500"
+              className="rounded-lg"
             />
-            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
-              Request a new handcrafted item.
-            </p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button asChild className="w-full">
@@ -36,7 +33,7 @@ export default function SubmitOrderPage() {
           </CardFooter>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800">
           <CardHeader className="text-center">
             <CardTitle>Request Repair Service</CardTitle>
           </CardHeader>
@@ -46,10 +43,8 @@ export default function SubmitOrderPage() {
               alt="image of scroll and ink pen"
               width="500"
               height="500"
+              className="rounded-lg"
             />
-            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
-              Request a repair service
-            </p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button disabled asChild className="w-full">
@@ -58,7 +53,7 @@ export default function SubmitOrderPage() {
           </CardFooter>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800">
           <CardHeader className="text-center">
             <CardTitle>Purchase Existing Items</CardTitle>
           </CardHeader>
@@ -68,10 +63,8 @@ export default function SubmitOrderPage() {
               alt="a blacksmith shop to buy items"
               width="500"
               height="500"
+              className="rounded-lg"
             />
-            <p className="text-center text-gray-900 dark:text-gray-100 text-lg mt-4">
-              Browse our collection of pre-made items.
-            </p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button

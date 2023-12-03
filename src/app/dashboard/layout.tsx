@@ -1,10 +1,45 @@
 "use client";
 
+import { useQuery } from "convex/react";
 import { CheckIcon, HammerIcon, PackageIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { api } from "../../../convex/_generated/api";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
+  const repairCounts = useQuery(api.repairs.getRepairCounts);
+  const orderCounts = useQuery(api.orders.getOrderCounts);
+  const pathname = usePathname();
+
+  function SideNavLink({
+    text,
+    icon,
+    count = 0,
+    path,
+  }: {
+    count?: number;
+    icon: ReactNode;
+    text: string;
+    path: string;
+  }) {
+    return (
+      <Link
+        className={cn(
+          "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400",
+          {
+            "text-purple-500": pathname === path,
+          }
+        )}
+        href={path}
+      >
+        {icon}
+        {text} ({count})
+      </Link>
+    );
+  }
+
   return (
     <div
       key="1"
@@ -15,72 +50,64 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <div className="flex-1 overflow-auto py-8">
             <div className="text-xl ml-4 mb-2">Repairs</div>
             <nav className="grid gap-2 items-start px-4 text-md font-medium">
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/repairs/new"
-              >
-                <StarIcon />
-                New Repairs
-              </Link>
+              <SideNavLink
+                count={repairCounts?.new}
+                icon={<StarIcon />}
+                path="/dashboard/repairs/new"
+                text="New"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/repairs/inProgress"
-              >
-                <HammerIcon />
-                In Progress
-              </Link>
+              <SideNavLink
+                count={repairCounts?.inProgress}
+                icon={<HammerIcon />}
+                path="/dashboard/repairs/inProgress"
+                text="In Progress"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/repairs/readyForPickup"
-              >
-                <PackageIcon />
-                Ready for Pickup
-              </Link>
+              <SideNavLink
+                count={repairCounts?.readyForPickup}
+                icon={<PackageIcon />}
+                path="/dashboard/repairs/readyForPickup"
+                text="Ready for Pickup"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/repairs/completed"
-              >
-                <CheckIcon />
-                Completed
-              </Link>
+              <SideNavLink
+                count={repairCounts?.completed}
+                icon={<CheckIcon />}
+                path="/dashboard/repairs/completed"
+                text="Completed"
+              />
             </nav>
 
             <div className="text-xl ml-4 mb-2 mt-8">Orders</div>
             <nav className="grid gap-2 items-start px-4 text-md font-medium">
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/orders/new"
-              >
-                <StarIcon />
-                New Orders
-              </Link>
+              <SideNavLink
+                count={orderCounts?.new}
+                icon={<StarIcon />}
+                path="/dashboard/orders/new"
+                text="New"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/orders/inProgress"
-              >
-                <HammerIcon />
-                In Progress
-              </Link>
+              <SideNavLink
+                count={orderCounts?.inProgress}
+                icon={<HammerIcon />}
+                path="/dashboard/orders/inProgress"
+                text="In Progress"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/orders/readyForPickup"
-              >
-                <PackageIcon />
-                Ready for Pickup
-              </Link>
+              <SideNavLink
+                count={orderCounts?.readyForPickup}
+                icon={<PackageIcon />}
+                path="/dashboard/orders/readyForPickup"
+                text="Ready for Pickup"
+              />
 
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-all hover:text-purple-400"
-                href="/dashboard/orders/completed"
-              >
-                <CheckIcon />
-                Completed
-              </Link>
+              <SideNavLink
+                count={orderCounts?.completed}
+                icon={<CheckIcon />}
+                path="/dashboard/orders/completed"
+                text="Completed"
+              />
             </nav>
           </div>
         </div>

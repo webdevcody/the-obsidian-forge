@@ -9,6 +9,7 @@ import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Header />
               {children}
               <Footer />
+              <Toaster />
             </ThemeProvider>
           </ConvexProviderWithClerk>
         </ClerkProvider>

@@ -11,8 +11,7 @@ export default function SuccessPage() {
         Order Created Successfully
       </h1>
       <p className="mt-2 text-white text-center">
-        Your order has been created and you will receive an email confirmation
-        shortly.
+        Your order has been created, we'll email you when it's ready
       </p>
       <Button asChild className="mt-8" variant="outline">
         <Link href="/">Go Home</Link>

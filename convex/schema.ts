@@ -8,12 +8,7 @@ export default defineSchema({
     materialType: v.string(),
     itemType: v.string(),
     user: v.any(),
-    upgrades: v.object({
-      sharpEdges: v.boolean(),
-      lightweight: v.boolean(),
-      reinforced: v.boolean(),
-      magicResistant: v.boolean(),
-    }),
+    upgrades: v.any(),
     status: v.union(
       v.literal("new"),
       v.literal("inProgress"),
