@@ -37,7 +37,7 @@ export function ViewOrderDialog({ order }: { order: Doc<"order"> }) {
               <div className="text-lg text-purple-300">{order.itemType}</div>
               <Image
                 className="rounded-xl self-center"
-                src={`/items/${order.itemType}.jpeg`}
+                src={`/items/${order.itemType.toLowerCase()}.jpeg`}
                 width="100"
                 height="100"
                 alt={order.itemType}

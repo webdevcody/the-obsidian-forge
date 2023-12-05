@@ -108,7 +108,7 @@ export default function DashboardPage({
                       <TableCell>
                         <Image
                           className="rounded-xl self-center"
-                          src={`/items/${order.itemType}.jpeg`}
+                          src={`/items/${order.itemType.toLowerCase()}.jpeg`}
                           width="40"
                           height="40"
                           alt={order.itemType}
