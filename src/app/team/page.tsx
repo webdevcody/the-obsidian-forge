@@ -1,4 +1,3 @@
-import { Title } from "@/components/title";
 import Image from "next/image";
 
 export default function TeamPage() {
