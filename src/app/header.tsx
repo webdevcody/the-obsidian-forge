@@ -37,42 +37,53 @@ export const Header = () => {
                 href="/dashboard/orders/new"
                 className="text-lg hover:text-purple-400 hidden md:block"
               >
-                Dashboard
+                Admin Dashboard
               </Link>
             ) : (
-              <Link
-                href="/submit-order"
-                className="text-lg hover:text-purple-400 hidden md:block"
-              >
-                Place an Order
-              </Link>
+              <>
+                <Link
+                  href="/submit-order"
+                  className="text-lg hover:text-purple-400 hidden md:block"
+                >
+                  Place an Order
+                </Link>
+                <Link
+                  href="/team"
+                  className="text-lg hover:text-purple-400 hidden md:block"
+                >
+                  Meet Our Team
+                </Link>
+              </>
             )}
           </div>
         </div>
 
         <div className="hidden md:block">
           {session ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarImage src={session.user.imageUrl} />
-                  <AvatarFallback className="bg-purple-300 text-black">
-                    CN
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <SignOutButton
-                    signOutCallback={() => {
-                      router.push("/");
-                    }}
-                  >
-                    Sign Out
-                  </SignOutButton>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-4">
+              <div>{session.user.primaryEmailAddress.emailAddress}</div>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarImage src={session.user.imageUrl} />
+                    <AvatarFallback className="bg-purple-300 text-black">
+                      CN
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <SignOutButton
+                      signOutCallback={() => {
+                        router.push("/");
+                      }}
+                    >
+                      Sign Out
+                    </SignOutButton>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           ) : (
             <SignInButton mode="modal">
               <button className="btn bg-gray-100 text-black py-2 px-4 hover:bg-gray-200 rounded">
