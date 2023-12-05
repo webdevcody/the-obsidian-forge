@@ -16,3 +16,7 @@ To test out the admin dashboard, login as:
 
 email: xiloceg612@bustayes.com
 password: thisIsaTestPassword!
+
+## Hosted at
+
+https://the-obsidian-forge.vercel.app/

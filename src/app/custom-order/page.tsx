@@ -174,75 +174,81 @@ export default function CustomOrderPage() {
   const router = useRouter();
 
   return (
-    <section className="container mx-auto px-4 py-8 text-white max-w-screen-lg">
-      <div className="text-center mb-8 flex flex-col gap-4">
-        <h1 className="text-4xl my-4 font-bold">Create a Custom Order</h1>
-        <p className="text-xl text-gray-500">Select your item type</p>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {itemTypes.map((itemType) => (
-          <ItemTypeCard
-            itemType={itemType}
-            selectedItemType={selectedItemType}
-            setItemType={setItemType}
-          />
-        ))}
-      </div>
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Select Material Type</h2>
-        <Select
-          onValueChange={(value) => {
-            setMaterialType(value);
-          }}
-          value={materialType}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a material" />
-          </SelectTrigger>
-          <SelectContent>
-            {materialTypes.map((type) => (
-              <SelectItem value={type.name}>{type.name}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Upgrade Packages</h2>
-        <div className="grid grid-cols-2 gap-8">
-          {allUpgrades.map((upgrade) => {
-            return (
-              <Label className="flex items-center gap-2 font-normal text-md">
-                <Checkbox
-                  checked={upgrades[upgrade.name] === true}
-                  onCheckedChange={(isChecked) =>
-                    setUpgrades({
-                      ...upgrades,
-                      [upgrade.name]: isChecked === true,
-                    })
-                  }
-                />
-                {upgrade.name} ({upgrade.description})
-              </Label>
-            );
-          })}
+    <main className="oldwall">
+      <section className="container mx-auto px-4 py-24 text-white max-w-screen-lg">
+        <div className="text-center mb-8 flex flex-col gap-4">
+          <h1 className="text-5xl font-bold text-center">Create an Order</h1>
+
+          <p className="text-xl text-gray-500">Select your item type</p>
         </div>
-      </div>
-      <div className="mt-12 text-center">
-        <Button
-          onClick={() =>
-            createOrderMutation({
-              itemType: selectedItemType,
-              materialType,
-              upgrades,
-            }).then((response) => {
-              router.push("/success");
-            })
-          }
-          className="px-10 py-2 text-black w-full"
-        >
-          Submit Order
-        </Button>
-      </div>
-    </section>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {itemTypes.map((itemType) => (
+            <ItemTypeCard
+              itemType={itemType}
+              selectedItemType={selectedItemType}
+              setItemType={setItemType}
+            />
+          ))}
+        </div>
+
+        <section className="mt-24">
+          <h2 className="text-2xl font-bold mb-4">Select Material Type</h2>
+          <Select
+            onValueChange={(value) => {
+              setMaterialType(value);
+            }}
+            value={materialType}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a material" />
+            </SelectTrigger>
+            <SelectContent>
+              {materialTypes.map((type) => (
+                <SelectItem value={type.name}>{type.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </section>
+
+        <section className="mt-24">
+          <h2 className="text-2xl font-bold mb-4">Upgrade Packages</h2>
+          <div className="grid grid-cols-2 gap-8">
+            {allUpgrades.map((upgrade) => {
+              return (
+                <Label className="flex items-center gap-2 font-normal text-md">
+                  <Checkbox
+                    checked={upgrades[upgrade.name] === true}
+                    onCheckedChange={(isChecked) =>
+                      setUpgrades({
+                        ...upgrades,
+                        [upgrade.name]: isChecked === true,
+                      })
+                    }
+                  />
+                  {upgrade.name} ({upgrade.description})
+                </Label>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mt-12 text-center">
+          <Button
+            onClick={() =>
+              createOrderMutation({
+                itemType: selectedItemType,
+                materialType,
+                upgrades,
+              }).then((response) => {
+                router.push("/success");
+              })
+            }
+            className="px-10 py-2 text-black w-full"
+          >
+            Submit Order
+          </Button>
+        </section>
+      </section>
+    </main>
   );
 }

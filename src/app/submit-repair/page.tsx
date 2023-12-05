@@ -21,25 +21,32 @@ export default function RepairsPage() {
   const router = useRouter();
 
   return (
-    <div className="space-y-8 max-w-screen-md h-[100vh] mx-auto mt-12">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold">Submit a Repair Request</h2>
+    <div className="space-y-8 py-24 max-w-screen-md h-[100vh] mx-auto">
+      <div className="space-y-2 mb-12">
+        <h1 className="text-5xl font-bold">Submit a Repair Request</h1>
+
         <p className="text-gray-500 dark:text-gray-400">
           Please provide the necessary details about the repair needed.
         </p>
       </div>
       <div className="space-y-4">
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-8">
           <div className="space-y-2">
-            <Label htmlFor="repair-image">Upload an Image</Label>
-            <UploadButton
-              uploadUrl={() => generateUploadUrl().then((url) => url as string)}
-              fileTypes={["image/*"]}
-              onUploadComplete={saveAfterUpload}
-              onUploadError={(error: unknown) => {
-                alert(`ERROR! ${error}`);
-              }}
-            />
+            <Label htmlFor="repair-image" className="text-xl">
+              Upload an Image
+            </Label>
+            <div className="border">
+              <UploadButton
+                uploadUrl={() =>
+                  generateUploadUrl().then((url) => url as string)
+                }
+                fileTypes={["image/*"]}
+                onUploadComplete={saveAfterUpload}
+                onUploadError={(error: unknown) => {
+                  alert(`ERROR! ${error}`);
+                }}
+              />
+            </div>
             {imageId && (
               <Image
                 src={`${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${imageId}`}
@@ -50,7 +57,9 @@ export default function RepairsPage() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" className="text-xl">
+              Description
+            </Label>
             <Textarea
               className="min-h-[100px]"
               id="description"

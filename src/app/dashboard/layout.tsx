@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       key="1"
       className="grid h-screen min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]"
     >
-      <div className="hidden border-r bg-gray-900 lg:block">
+      <div className="hidden border-r wall lg:block">
         <div className="flex h-full max-h-screen flex-col gap-8">
           <div className="flex-1 overflow-auto py-8">
             <div className="text-xl ml-4 mb-2">Repairs</div>
@@ -112,7 +112,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="oldwall flex flex-col">
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           {children}
         </main>

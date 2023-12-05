@@ -19,7 +19,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-gray-800 border-b py-2 px-8 flex justify-between items-center w-full">
+      <header className="bg-gray-950 border-b py-2 px-8 flex justify-between items-center w-full">
         <div className="text-white text-lg font-semibold flex gap-16 items-center">
           <Link href="/" className="flex items-center gap-2">
             <Image

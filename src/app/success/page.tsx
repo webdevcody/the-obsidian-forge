@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button";
 
 export default function SuccessPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-4">
+    <div className="oldwall flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-4">
       <IconCheck className="h-24 w-24 text-green-500 dark:text-green-300" />
       <h1 className="mt-4 text-2xl font-semibold text-white">
         Order Created Successfully
       </h1>
-      <p className="mt-2 text-white text-center">
+      <p className="mt-2 text-white text-center mb-8">
         Your order has been created, we'll email you when it's ready
       </p>
-      <Button asChild className="mt-8" variant="outline">
+      <Button asChild>
         <Link href="/">Go Home</Link>
       </Button>
     </div>

@@ -11,7 +11,9 @@ import Image from "next/image";
 
 export default function SubmitOrderPage() {
   return (
-    <main className="flex-1 py-24">
+    <main className="oldwall flex-1 py-24 min-h-screen">
+      <h1 className="text-5xl font-bold text-center mb-24">Our Services</h1>
+
       <div className="max-w-screen-lg mx-auto grid gap-8 md:grid-cols-3">
         <Card className="bg-gray-800">
           <CardHeader className="text-center">
