@@ -151,7 +151,7 @@ function ItemTypeCard({
       <div className="flex flex-col items-center">
         <Image
           className="rounded-xl"
-          src={`/items/${itemType}.jpeg`}
+          src={`/items/${itemType.toLowerCase()}.jpeg`}
           width="100"
           height="100"
           alt={itemType}
