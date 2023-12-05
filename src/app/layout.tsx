@@ -1,7 +1,6 @@
 "use client";
 
 import "src/styles/globals.css";
-import NextTopLoader from "nextjs-toploader";
 import { type ReactNode } from "react";
 import { ConvexReactClient } from "convex/react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-react";
@@ -17,7 +16,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <NextTopLoader showSpinner={false} color="#2264AB" />
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
         >

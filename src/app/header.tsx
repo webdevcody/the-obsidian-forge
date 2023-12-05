@@ -61,7 +61,9 @@ export const Header = () => {
         <div className="hidden md:block">
           {session ? (
             <div className="flex items-center gap-4">
-              <div>{session.user.primaryEmailAddress.emailAddress}</div>
+              <div>
+                {session.user.primaryEmailAddress?.emailAddress ?? "undefined"}
+              </div>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar>
