@@ -33,7 +33,7 @@ export default function RepairsPage() {
           <div className="space-y-2">
             <Label htmlFor="repair-image">Upload an Image</Label>
             <UploadButton
-              uploadUrl={generateUploadUrl}
+              uploadUrl={() => generateUploadUrl().then((url) => url as string)}
               fileTypes={["image/*"]}
               onUploadComplete={saveAfterUpload}
               onUploadError={(error: unknown) => {

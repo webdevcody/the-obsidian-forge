@@ -168,7 +168,7 @@ export default function CustomOrderPage() {
   const createOrderMutation = useMutation(api.orders.createOrder);
   const [selectedItemType, setItemType] = useState("");
   const [materialType, setMaterialType] = useState("");
-  const [upgrades, setUpgrades] = useState<Record<string, string>>(
+  const [upgrades, setUpgrades] = useState<Record<string, boolean>>(
     allUpgrades.reduce((acc, cur) => ({ ...acc, [cur.name]: false }), {})
   );
   const router = useRouter();
