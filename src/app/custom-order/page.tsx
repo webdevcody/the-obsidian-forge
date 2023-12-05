@@ -176,7 +176,7 @@ export default function CustomOrderPage() {
   return (
     <section className="container mx-auto px-4 py-8 text-white max-w-screen-lg">
       <div className="text-center mb-8 flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">Create a Custom Order</h1>
+        <h1 className="text-4xl my-4 font-bold">Create a Custom Order</h1>
         <p className="text-xl text-gray-500">Select your item type</p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
